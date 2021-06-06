@@ -1,12 +1,20 @@
 let lineaAncho = 14; // cm
 let lineaAlto = 28;  // cm
 let escalaInicial = 1920/200;  // px/cm
-let lineaAnchoCorregido = escalaInicial*lineaAncho; // px
-let lineaAltoCorregido = escalaInicial*lineaAlto;   // px
+let lineaAnchoCorregido = lineaAncho; // cm
+let lineaAltoCorregido = lineaAlto;   // cm
 let fondoColor;
 let lineaColor;
 let entradaAncho;
 let entradaAlto;
+
+function pixel2cm(pixel) {
+    return pixel / escalaInicial; //Devuelve cm
+}
+
+function cm2pixel(cm) {
+    return cm * escalaInicial; //Devuelve px
+}
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
@@ -37,8 +45,8 @@ function setup() {
 }
 
 function actualizarMedidas() {
-    lineaAncho = escalaInicial*entradaAncho.value();
-    lineaAlto = escalaInicial*entradaAlto.value();
+    lineaAncho = entradaAncho.value();
+    lineaAlto = entradaAlto.value();
     lineaAltoCorregido = lineaAlto;
     lineaAnchoCorregido = lineaAncho;
 }
@@ -62,13 +70,13 @@ function draw() {
     stroke(lineaColor.color());
     
     
-    let espaciosHorizontal = windowWidth/lineaAnchoCorregido;
-    let espaciosVertical = windowHeight/lineaAltoCorregido;
+    let espaciosHorizontal = windowWidth/cm2pixel(lineaAnchoCorregido);
+    let espaciosVertical = windowHeight/cm2pixel(lineaAltoCorregido);
     let repeticiones = espaciosHorizontal + espaciosVertical;
     
     for (let i=0; i<repeticiones; i++) {
-        line(0, i*lineaAltoCorregido, i*lineaAnchoCorregido, 0);
-        line(windowWidth-i*lineaAnchoCorregido, 0, windowWidth, i*lineaAltoCorregido);
+        line(0, i*cm2pixel(lineaAltoCorregido), i*cm2pixel(lineaAnchoCorregido), 0);
+        line(windowWidth-i*cm2pixel(lineaAnchoCorregido), 0, windowWidth, i*cm2pixel(lineaAltoCorregido));
     }
 
     //TODO UI
