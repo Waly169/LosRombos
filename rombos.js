@@ -7,6 +7,7 @@ let fondoColor;
 let lineaColor;
 let entradaAncho;
 let entradaAlto;
+let factorCalibracion = 1;
 
 function pixel2cm(pixel) {
     return pixel / escalaInicial; //Devuelve cm
@@ -47,16 +48,17 @@ function setup() {
 function actualizarMedidas() {
     lineaAncho = entradaAncho.value();
     lineaAlto = entradaAlto.value();
-    lineaAltoCorregido = lineaAlto;
-    lineaAnchoCorregido = lineaAncho;
+    lineaAltoCorregido = lineaAlto * factorCalibracion;
+    lineaAnchoCorregido = lineaAncho * factorCalibracion;
 }
 
 
 
 function calibrar() {
     let altoMedido = prompt("Inserte el alto medido (cm):", "28.0");
-    lineaAltoCorregido = lineaAltoCorregido*lineaAlto/altoMedido;
-    lineaAnchoCorregido = lineaAnchoCorregido*lineaAlto/altoMedido;
+    factorCalibracion = lineaAlto/altoMedido;
+    lineaAltoCorregido = lineaAltoCorregido*factorCalibracion;
+    lineaAnchoCorregido = lineaAnchoCorregido*factorCalibracion;
 }3
 
 
