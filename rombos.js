@@ -20,6 +20,17 @@ function cm2pixel(cm) {
     return cm * escalaInicial; //Devuelve px
 }
 
+function cargarConfiguracion(file) {
+    if (file.type === 'application') {
+        let rombosCargado = file.data;
+        // TODO Verificar el formato de la configuración cargada
+        rombos = rombosCargado;
+        actualizarMedidas();
+    } else {
+        // TODO gestionar error
+    }
+}
+
 function setup() {
     createCanvas(windowWidth, windowHeight);
     fondoColor = createColorPicker('#ffffff');
@@ -44,8 +55,9 @@ function setup() {
     botonCalibrar.position(580, 12);
     botonCalibrar.mousePressed(calibrar);
 
-
-    
+    let botonCargarConfiguracion = createFileInput(cargarConfiguracion);
+    botonCargarConfiguracion.position(680, 12);
+    botonCargarConfiguracion.attribute("accept", "application/json");
 }
 
 function actualizarMedidas() {
@@ -63,7 +75,7 @@ function calibrar() {
     if (altoMedido === null) {
         return;
     }
-    
+
     rombos.factorCalibracion = rombos.lineaAlto / altoMedido;
     lineaAltoCorregido = lineaAltoCorregido * rombos.factorCalibracion;
     lineaAnchoCorregido = lineaAnchoCorregido * rombos.factorCalibracion;
