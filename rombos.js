@@ -1,6 +1,6 @@
 let lineaAncho = 14; // cm
 let lineaAlto = 28;  // cm
-let escalaInicial = 1920/200;  // px/cm
+let escalaInicial = 1920 / 200;  // px/cm
 let lineaAnchoCorregido = lineaAncho; // cm
 let lineaAltoCorregido = lineaAlto;   // cm
 let fondoColor;
@@ -25,13 +25,13 @@ function setup() {
     lineaColor.position(200, 10);
     
     
-    entradaAncho = createInput(lineaAncho);
+    entradaAncho = createInput(lineaAncho.toString());
     entradaAncho.size(30);
     entradaAncho.position(370, 12);
     entradaAncho.changed(actualizarMedidas);
     
 
-    entradaAlto = createInput(lineaAlto);
+    entradaAlto = createInput(lineaAlto.toString());
     entradaAlto.size(30);
     entradaAlto.position(470, 12);
     entradaAlto.changed(actualizarMedidas);
@@ -56,9 +56,9 @@ function actualizarMedidas() {
 
 function calibrar() {
     let altoMedido = prompt("Inserte el alto medido (cm):", "28.0");
-    factorCalibracion = lineaAlto/altoMedido;
-    lineaAltoCorregido = lineaAltoCorregido*factorCalibracion;
-    lineaAnchoCorregido = lineaAnchoCorregido*factorCalibracion;
+    factorCalibracion = lineaAlto / altoMedido;
+    lineaAltoCorregido = lineaAltoCorregido * factorCalibracion;
+    lineaAnchoCorregido = lineaAnchoCorregido * factorCalibracion;
 }3
 
 
@@ -74,13 +74,13 @@ function draw() {
     let lineaAnchoPixel = cm2pixel(lineaAnchoCorregido);
     let lineaAltoPixel = cm2pixel(lineaAltoCorregido);
     
-    let espaciosHorizontal = windowWidth/lineaAnchoPixel;
-    let espaciosVertical = windowHeight/lineaAltoPixel;
+    let espaciosHorizontal = windowWidth / lineaAnchoPixel;
+    let espaciosVertical = windowHeight / lineaAltoPixel;
     let repeticiones = espaciosHorizontal + espaciosVertical;
     
-    for (let i=0; i<repeticiones; i++) {
-        line(0, i*lineaAltoPixel, i*lineaAnchoPixel, 0);
-        line(windowWidth-i*lineaAnchoPixel, 0, windowWidth, i*lineaAltoPixel);
+    for (let i = 0; i < repeticiones; i++) {
+        line(0, i * lineaAltoPixel, i * lineaAnchoPixel, 0);
+        line(windowWidth - i * lineaAnchoPixel, 0, windowWidth, i * lineaAltoPixel);
     }
 
     //TODO UI
