@@ -69,14 +69,16 @@ function draw() {
     background(fondoColor.color());
     stroke(lineaColor.color());
     
+    let lineaAnchoPixel = cm2pixel(lineaAnchoCorregido);
+    let lineaAltoPixel = cm2pixel(lineaAltoCorregido);
     
-    let espaciosHorizontal = windowWidth/cm2pixel(lineaAnchoCorregido);
-    let espaciosVertical = windowHeight/cm2pixel(lineaAltoCorregido);
+    let espaciosHorizontal = windowWidth/lineaAnchoPixel;
+    let espaciosVertical = windowHeight/lineaAltoPixel;
     let repeticiones = espaciosHorizontal + espaciosVertical;
     
     for (let i=0; i<repeticiones; i++) {
-        line(0, i*cm2pixel(lineaAltoCorregido), i*cm2pixel(lineaAnchoCorregido), 0);
-        line(windowWidth-i*cm2pixel(lineaAnchoCorregido), 0, windowWidth, i*cm2pixel(lineaAltoCorregido));
+        line(0, i*lineaAltoPixel, i*lineaAnchoPixel, 0);
+        line(windowWidth-i*lineaAnchoPixel, 0, windowWidth, i*lineaAltoPixel);
     }
 
     //TODO UI
