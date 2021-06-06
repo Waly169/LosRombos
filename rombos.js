@@ -59,11 +59,15 @@ function actualizarMedidas() {
 
 function calibrar() {
     let altoMedido = prompt("Inserte el alto medido (cm):", "28.0");
-    // TODO Al presionar cancelar... ??
+
+    if (altoMedido === null) {
+        return;
+    }
+    
     rombos.factorCalibracion = rombos.lineaAlto / altoMedido;
     lineaAltoCorregido = lineaAltoCorregido * rombos.factorCalibracion;
     lineaAnchoCorregido = lineaAnchoCorregido * rombos.factorCalibracion;
-    
+
     // TODO mover a un nuevo boton 
     download("rombos.json", JSON.stringify(rombos));
 }
