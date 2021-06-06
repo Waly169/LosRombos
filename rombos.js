@@ -1,13 +1,16 @@
-let lineaAncho = 14; // cm
-let lineaAlto = 28;  // cm
+let rombos = {
+    lineaAncho: 14, // cm
+    lineaAlto: 28,  // cm
+    factorCalibracion: 1,
+    //Meter lineas guia
+};
 let escalaInicial = 1920 / 200;  // px/cm
-let lineaAnchoCorregido = lineaAncho; // cm
-let lineaAltoCorregido = lineaAlto;   // cm
+let lineaAnchoCorregido = rombos.lineaAncho; // cm
+let lineaAltoCorregido = rombos.lineaAlto;   // cm
 let fondoColor;
 let lineaColor;
 let entradaAncho;
 let entradaAlto;
-let factorCalibracion = 1;
 
 function pixel2cm(pixel) {
     return pixel / escalaInicial; //Devuelve cm
@@ -25,13 +28,13 @@ function setup() {
     lineaColor.position(200, 10);
     
     
-    entradaAncho = createInput(lineaAncho.toString());
+    entradaAncho = createInput(rombos.lineaAncho.toString());
     entradaAncho.size(30);
     entradaAncho.position(370, 12);
     entradaAncho.changed(actualizarMedidas);
     
 
-    entradaAlto = createInput(lineaAlto.toString());
+    entradaAlto = createInput(rombos.lineaAlto.toString());
     entradaAlto.size(30);
     entradaAlto.position(470, 12);
     entradaAlto.changed(actualizarMedidas);
@@ -46,19 +49,19 @@ function setup() {
 }
 
 function actualizarMedidas() {
-    lineaAncho = entradaAncho.value();
-    lineaAlto = entradaAlto.value();
-    lineaAltoCorregido = lineaAlto * factorCalibracion;
-    lineaAnchoCorregido = lineaAncho * factorCalibracion;
+    rombos.lineaAncho = entradaAncho.value();
+    rombos.lineaAlto = entradaAlto.value();
+    lineaAltoCorregido = rombos.lineaAlto * rombos.factorCalibracion;
+    lineaAnchoCorregido = rombos.lineaAncho * rombos.factorCalibracion;
 }
 
 
 
 function calibrar() {
     let altoMedido = prompt("Inserte el alto medido (cm):", "28.0");
-    factorCalibracion = lineaAlto / altoMedido;
-    lineaAltoCorregido = lineaAltoCorregido * factorCalibracion;
-    lineaAnchoCorregido = lineaAnchoCorregido * factorCalibracion;
+    rombos.factorCalibracion = rombos.lineaAlto / altoMedido;
+    lineaAltoCorregido = lineaAltoCorregido * rombos.factorCalibracion;
+    lineaAnchoCorregido = lineaAnchoCorregido * rombos.factorCalibracion;
 }3
 
 
