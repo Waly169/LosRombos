@@ -11,6 +11,8 @@ let fondoColor;
 let lineaColor;
 let entradaAncho;
 let entradaAlto;
+let grosorSlider;
+let grosorMax = 10;
 
 function pixel2cm(pixel) {
     return pixel / escalaInicial; //Devuelve cm
@@ -62,6 +64,10 @@ function setup() {
     let botonGuardarConfiguracion = createButton('Guardar');
     botonGuardarConfiguracion.position(680, 12);
     botonGuardarConfiguracion.mousePressed(guardarMedidas);
+
+    grosorSlider = createSlider(1, grosorMax, 1);
+    grosorSlider.position(1200, 12);
+    grosorSlider.style('width', '80px');
 }
 
 function actualizarMedidas() {
@@ -97,6 +103,8 @@ function windowResized() {
 function draw() {
     background(fondoColor.color());
     stroke(lineaColor.color());
+    grosorLinea = grosorSlider.value();
+    strokeWeight(grosorLinea);
     
     let lineaAnchoPixel = cm2pixel(lineaAnchoCorregido);
     let lineaAltoPixel = cm2pixel(lineaAltoCorregido);
@@ -112,6 +120,8 @@ function draw() {
 
     //TODO UI
     fill(240);
+    strokeWeight(1);
+    stroke(0);
     rect(0, 0, windowWidth, 45);
     
     textSize(20);
