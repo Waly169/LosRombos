@@ -13,6 +13,10 @@ let entradaAncho;
 let entradaAlto;
 let grosorSlider;
 let grosorMax = 10;
+let modoGuiaHorizontal = false;
+let guiasHorizontales = [];
+let guiaY = 100;
+
 
 function pixel2cm(pixel) {
     return pixel / escalaInicial; //Devuelve cm
@@ -46,7 +50,7 @@ function setup() {
     entradaAncho.position(370, 12);
     entradaAncho.changed(actualizarMedidas);
     
-
+    
     entradaAlto = createInput(rombos.lineaAlto.toString());
     entradaAlto.size(30);
     entradaAlto.position(470, 12);
@@ -56,18 +60,30 @@ function setup() {
     let botonCalibrar = createButton('CALIBRAR');
     botonCalibrar.position(540, 12);
     botonCalibrar.mousePressed(calibrar);
-
+    
     let botonCargarConfiguracion = createFileInput(cargarConfiguracion);
     botonCargarConfiguracion.position(750, 12);
     botonCargarConfiguracion.attribute("accept", "application/json");
-
+    
     let botonGuardarConfiguracion = createButton('Guardar');
     botonGuardarConfiguracion.position(680, 12);
     botonGuardarConfiguracion.mousePressed(guardarMedidas);
-
+    
     grosorSlider = createSlider(1, grosorMax, 1);
     grosorSlider.position(1200, 12);
     grosorSlider.style('width', '80px');
+    
+    let botonGuia = createButton('Linea guia');
+    botonGuia.position(1500, 12);
+    botonGuia.mousePressed(lineaGuiaHorizontal);
+    
+    
+    
+    
+}
+
+function lineaGuiaHorizontal() {
+    modoGuiaHorizontal = !modoGuiaHorizontal;
 }
 
 function actualizarMedidas() {
@@ -83,15 +99,15 @@ function guardarMedidas() {
 
 function calibrar() {
     let altoMedido = prompt("Inserte el alto medido (cm):", "28.0");
-
+    
     if (altoMedido === null) {
         return;
     }
-
+    
     rombos.factorCalibracion = rombos.lineaAlto / altoMedido;
     lineaAltoCorregido = lineaAltoCorregido * rombos.factorCalibracion;
     lineaAnchoCorregido = lineaAnchoCorregido * rombos.factorCalibracion;
-
+    
 }
 
 
@@ -99,6 +115,13 @@ function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
 }
 
+function mousePressed(){
+    if (modoGuiaHorizontal == true && mouseY > 45){
+        guiaY = mouseY;
+        modoGuiaHorizontal = false;
+    
+    }
+}
 
 function draw() {
     background(fondoColor.color());
@@ -113,16 +136,30 @@ function draw() {
     let espaciosVertical = windowHeight / lineaAltoPixel;
     let repeticiones = espaciosHorizontal + espaciosVertical;
     
+    
     for (let i = 0; i < repeticiones; i++) {
         line(0, i * lineaAltoPixel, i * lineaAnchoPixel, 0);
         line(windowWidth - i * lineaAnchoPixel, 0, windowWidth, i * lineaAltoPixel);
     }
+    
 
+    
+    if (modoGuiaHorizontal == true) {
+        stroke(0);
+        line(0,mouseY,windowWidth,mouseY);
+        //  if (mouseReleased()){
+        //      line(0,mouseY,windowWidth,mouseY);
+        //  }
+    }
+    
+    line(0,guiaY,windowWidth,guiaY);
+    
     //TODO UI
     fill(240);
     strokeWeight(1);
     stroke(0);
     rect(0, 0, windowWidth, 45);
+    
     
     textSize(20);
     noStroke();
@@ -132,4 +169,6 @@ function draw() {
     textSize(18);
     text('Ancho', 310, 30);
     text('Alto', 430, 30);
+    
+    
 }
