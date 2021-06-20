@@ -52,12 +52,16 @@ function setup() {
     
     
     let botonCalibrar = createButton('CALIBRAR');
-    botonCalibrar.position(580, 12);
+    botonCalibrar.position(540, 12);
     botonCalibrar.mousePressed(calibrar);
 
     let botonCargarConfiguracion = createFileInput(cargarConfiguracion);
-    botonCargarConfiguracion.position(680, 12);
+    botonCargarConfiguracion.position(750, 12);
     botonCargarConfiguracion.attribute("accept", "application/json");
+
+    let botonGuardarConfiguracion = createButton('Guardar');
+    botonGuardarConfiguracion.position(680, 12);
+    botonGuardarConfiguracion.mousePressed(guardarMedidas);
 }
 
 function actualizarMedidas() {
@@ -67,7 +71,9 @@ function actualizarMedidas() {
     lineaAnchoCorregido = rombos.lineaAncho * rombos.factorCalibracion;
 }
 
-
+function guardarMedidas() {
+    download("rombos.json", JSON.stringify(rombos));
+}
 
 function calibrar() {
     let altoMedido = prompt("Inserte el alto medido (cm):", "28.0");
@@ -80,8 +86,6 @@ function calibrar() {
     lineaAltoCorregido = lineaAltoCorregido * rombos.factorCalibracion;
     lineaAnchoCorregido = lineaAnchoCorregido * rombos.factorCalibracion;
 
-    // TODO mover a un nuevo boton 
-    download("rombos.json", JSON.stringify(rombos));
 }
 
 
