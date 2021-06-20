@@ -15,7 +15,7 @@ let grosorSlider;
 let grosorMax = 10;
 let modoGuiaHorizontal = false;
 let guiasHorizontales = [];
-let guiaY = 100;
+let guiaY;
 
 
 function pixel2cm(pixel) {
