@@ -15,7 +15,7 @@ let grosorSlider;
 let grosorMax = 10;
 let modoGuiaHorizontal = false;
 let guiasHorizontales = [];
-let guiaY;
+//let guiaY;
 
 
 function pixel2cm(pixel) {
@@ -117,7 +117,8 @@ function windowResized() {
 
 function mousePressed(){
     if (modoGuiaHorizontal == true && mouseY > 45){
-        guiaY = mouseY;
+        append(guiasHorizontales, mouseY);
+        console.log(guiasHorizontales);
         modoGuiaHorizontal = false;
     
     }
@@ -143,16 +144,13 @@ function draw() {
     }
     
 
-    
+    //Visualizo la linea guia para saber donde se colocara
     if (modoGuiaHorizontal == true) {
-        stroke(0);
         line(0,mouseY,windowWidth,mouseY);
-        //  if (mouseReleased()){
-        //      line(0,mouseY,windowWidth,mouseY);
-        //  }
     }
     
-    line(0,guiaY,windowWidth,guiaY);
+    guiasHorizontales.forEach(guiaY => line(0,guiaY,windowWidth,guiaY));
+    
     
     //TODO UI
     fill(240);
